@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    max-width: 1440px;
+}
+
+html {
+    margin-inline: auto;
+}
+
+.navbar-brand {
+    font-size: larger;
+    margin-left:calc(50% - 80px);
+}
+.navbar-nav {
+    font-size: larger;
+}
+
+#search-label {
+    font-size: xx-large;
+}
+
+#App h1 {
+    font-size: xx-large;
+}
