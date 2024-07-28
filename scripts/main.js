@@ -63,9 +63,9 @@ function showTasks(tasks) {
     const div = document.createElement("div");
     tasksContainer.appendChild(div);
     div.className = "row g-md-4";
+
     tasks.forEach(task => {
         const color = traverseColors();  // Elegimos el siguiente color del array
-
         div.innerHTML += `
             <div class="col-lg-6">
                 <div class="card ${color} p-3 h-100 text-center">
@@ -117,7 +117,7 @@ function showTasks(tasks) {
                             </li>
                         `);
 
-        taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks];
+        const taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks];
         taskCard.innerHTML += `
                     <div class="card-body w-100 px-4">
                         <button href="#" class="btn btn-light w-100" id="${task.id}" name="delete">Borrar</button>
@@ -136,6 +136,7 @@ function getRandomId() {
     return Math.floor(Math.random() * Date.now()).toString(16);
 }
 
+
     // Listeners
     // Función para guardar tareas en tasks, en el storage y para actualizar display
 taskForm.addEventListener('submit', (e) => {
@@ -145,6 +146,8 @@ taskForm.addEventListener('submit', (e) => {
     const task = createTask(form);
     addTask(task);
     showTasks(tasks);
+    const taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks-1]; 
+    taskCard.scrollIntoView();  // para hacer scroll hacia la última tarea agregada
 });
 
     // Acá va common-listeners script

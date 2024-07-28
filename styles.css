@@ -24,11 +24,6 @@ html {
     font-size: xx-large;
 }
 
-.input-group span {
+.input-group-text {
     padding: 14px 18px;
-}
-
-.input-group img {
-    height: 32px;
-    width: 32px;
 }

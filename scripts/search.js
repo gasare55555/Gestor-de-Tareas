@@ -4,6 +4,7 @@
     // variables globales de search page
 const months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 const searchInput = document.getElementById("search-input");
+const searchForm = document.getElementById("search-form");
 const tasksContainer = document.getElementById("tasks-container");
 let searchResult = [];
 
@@ -90,7 +91,7 @@ function showTasks() {
                         `);
 
 
-        taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks];
+        const taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks];
         taskCard.innerHTML += `
                     <div class="card-body w-100 px-4">
                         <button href="#" class="btn btn-light w-100" id="${task.id}" name="delete">Borrar</button>
@@ -112,9 +113,13 @@ function deleteTask(id) {
         });
 }
 
-    // Event-listeners
-searchInput.addEventListener("keydown", (e) => {
-    e.key == "Enter" && searchTasks();
-});
+
+    // Listeners
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchTasks();
+    const taskCard = document.getElementsByClassName("card p-3 h-100")[0]; 
+    taskCard.scrollIntoView(); // para hacer scroll hacia la primera tarea desplegada
+})
 
     // Acá va common-listeners script

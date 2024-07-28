@@ -1,7 +1,7 @@
 
     // Función para borrar tareas de tasks, del storage y para actualizar display
 tasksContainer.addEventListener('click', (e) => {
-    // Ejecuta solo si presionamos en el botón borrar. Para la propagación del evento en el bubbling phase.
+    // Ejecuta solo si presionamos en el botón borrar y para la propagación del evento en el bubbling phase.
     if (e.target.className.includes("btn")){
         deleteTask(e.target.id);
         showTasks(tasks);
