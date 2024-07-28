@@ -1,3 +1,10 @@
+    
+    // acá va common-resources script
+
+    // variables globales de main page 
+const taskForm = document.getElementById('task-form');
+const tasksContainer = document.getElementById("tasks-container");
+
     // Clase del Objeto Task: con propiedades y métodos específicos.
 class Task {
     constructor(form) {
@@ -50,12 +57,15 @@ function deleteTask(id) {
     // Función para actualizar el display de las tareas
 function showTasks(tasks) {
     tasksContainer.innerHTML = '';  // Reseteamos el contenedor de las tareas 
-    counter = -1; // Reseteamos el orden de los colores
+    counterColors = -1; // Reseteamos el orden de los colores
+    counterTasks = 0; // Reseteamos el contador de tareas
 
     const div = document.createElement("div");
+    tasksContainer.appendChild(div);
     div.className = "row g-md-4";
     tasks.forEach(task => {
         const color = traverseColors();  // Elegimos el siguiente color del array
+
         div.innerHTML += `
             <div class="col-lg-6">
                 <div class="card ${color} p-3 h-100 text-center">
@@ -65,10 +75,17 @@ function showTasks(tasks) {
                                 <h5 class="card-title">Título</h5>
                                 <p class="card-text">${task.title}</p>
                             </li>
+                        `;
+
+        const taskItems = document.getElementsByClassName("list-group list-group-flush")[counterTasks];
+        task.description && (taskItems.innerHTML += `
                             <li class="list-group-item ${color}">
                                 <h5 class="card-title">Descripción</h5>
                                 <p class="card-text">${task.description}</p>
                             </li>
+                        `);
+
+        taskItems.innerHTML += `
                             <li class="list-group-item ${color}">
                                 <h5 class="card-title">Fecha</h5>
                                 <p class="card-text">${task.dateObj.toLocaleDateString()}</p>
@@ -77,27 +94,37 @@ function showTasks(tasks) {
                                 <h5 class="card-title">Hora</h5>
                                 <p class="card-text">${task.dateObj.toLocaleTimeString()}</p>
                             </li>
+                        `;
+
+        task.place && (taskItems.innerHTML += `
                             <li class="list-group-item ${color}">
                                 <h5 class="card-title">Lugar</h5>
                                 <p class="card-text">${task.place}</p>
                             </li>
+                        `);
+
+        task.people && (taskItems.innerHTML += `
                             <li class="list-group-item ${color}">
                                 <h5 class="card-title">Personas</h5>
                                 <p class="card-text">${task.people}</p>
                             </li>
+                        `);
+
+        task.materials && (taskItems.innerHTML += `
                             <li class="list-group-item ${color}">
                                 <h5 class="card-title">Materiales</h5>
                                 <p class="card-text">${task.materials}</p>
                             </li>
-                        </ul>
-                    </div>
+                        `);
+
+        taskCard = document.getElementsByClassName("card p-3 h-100")[counterTasks];
+        taskCard.innerHTML += `
                     <div class="card-body w-100 px-4">
                         <button href="#" class="btn btn-light w-100" id="${task.id}" name="delete">Borrar</button>
                     </div>                    
-                </div>
-            </div>
-        `;
-        tasksContainer.appendChild(div);
+                `;  
+
+        counterTasks++;  
     });
 }
 
@@ -105,22 +132,12 @@ function saveTasksStorage (tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-function getTasksStorage () {
-    if (localStorage.getItem("tasks")) {
-        tasks = JSON.parse(localStorage.getItem("tasks"));
-        // Para volver a convertir a objeto el string devuelto por JSON
-        tasks.forEach((task) => task.dateObj = new Date(task.dateObj)); 
-        showTasks(tasks);
-    }
-}
-
 function getRandomId() {
     return Math.floor(Math.random() * Date.now()).toString(16);
 }
 
-
     // Listeners
-    //Función para guardar tareas en tasks, en el storage y para actualizar display
+    // Función para guardar tareas en tasks, en el storage y para actualizar display
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -130,16 +147,4 @@ taskForm.addEventListener('submit', (e) => {
     showTasks(tasks);
 });
 
-    // Función para borrar tareas de tasks, del storage y para actualizar display
-tasksContainer.addEventListener('click', (e) => {
-    // Ejecuta solo si presionamos en el botón borrar. Para la propagación del evento en el bubbling phase.
-    if (e.target.className.includes("btn")){
-        deleteTask(e.target.id);
-        showTasks(tasks);
-
-        e.stopPropagation();  
-    }
-});
-
-    // Función para recuperar los datos del storage y actualizar el display
-document.addEventListener("DOMContentLoaded", getTasksStorage);
+    // Acá va common-listeners script

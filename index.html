@@ -52,8 +52,11 @@
                                 <input type="text" id="title" name="title" class="form-control" required>
                             </div>
                             <div class="mb-2">
-                                <label for="description" class="form-label">Descripción</label>
-                                <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+                                <div class="d-flex justify-content-between">
+                                    <label for="description" class="form-label">Descripción</label>
+                                    <span id="description-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                </div>
+                                <textarea id="description" name="description" class="form-control" rows="3" aria-describedby="description-help"></textarea>
                             </div>
                             <div class="mb-2">
                                 <label for="date" class="form-label">Fecha</label>
@@ -64,16 +67,25 @@
                                 <input type="time" id="time" name="time" class="form-control" required>
                             </div>
                             <div class="mb-2">
-                                <label for="place" class="form-label">Lugar</label>
-                                <textarea id="place" name="place" class="form-control" rows="1"></textarea>
+                                <div class="d-flex justify-content-between">
+                                    <label for="place" class="form-label">Lugar</label>
+                                    <span id="place-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                </div>
+                                <textarea id="place" name="place" class="form-control" rows="1" aria-describedby="place-help"></textarea>
                             </div>
                             <div class="mb-2">
-                                <label for="people" class="form-label">Personas</label>
-                                <textarea id="people" name="people" class="form-control"></textarea>
+                                <div class="d-flex justify-content-between">
+                                    <label for="people" class="form-label">Personas</label>
+                                    <span id="people-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                </div>
+                                <textarea id="people" name="people" class="form-control" aria-describedby="people-help"></textarea>
                             </div>
                             <div style="margin-bottom: 2.5rem;">
-                                <label for="materials" class="form-label">Materiales</label>
-                                <textarea id="materials" name="materials" class="form-control"></textarea>
+                                <div class="d-flex justify-content-between">
+                                    <label for="materials" class="form-label">Materiales</label>
+                                    <span id="materials-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                </div>
+                                <textarea id="materials" name="materials" class="form-control" aria-describedby="materials-help"></textarea>
                             </div>
                             <div>
                                 <input type="submit" value="Guardar" class="btn btn-light btn-block w-100">
@@ -83,7 +95,7 @@
                 </div>
     
                 <!-- TASKS LIST -->
-                <div id="tasks-container" class="col-md-7 col-lg-8">
+                <div class="col-md-7 col-lg-8" id="tasks-container" >
                     <!-- Generado en JS -->
                 </div>
     
@@ -91,8 +103,9 @@
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="./scripts/global.js"></script>
+    <script src="./scripts/common-resources.js"></script>
     <script src="./scripts/main.js"></script>    
+    <script src="./scripts/common-listeners.js"></script>
 </body>
 
 </html>

@@ -16,10 +16,19 @@ html {
     font-size: larger;
 }
 
+#App h1 {
+    font-size: xx-large;
+}
+
 #search-label {
     font-size: xx-large;
 }
 
-#App h1 {
-    font-size: xx-large;
+.input-group span {
+    padding: 14px 18px;
+}
+
+.input-group img {
+    height: 32px;
+    width: 32px;
 }
