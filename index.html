@@ -46,7 +46,6 @@
                 <!-- FORM -->
                 <div class="col-md-5 col-lg-4">
                     <div class="card text-bg-dark mb-4 p-2">
-                    
                         <form id="task-form" class="card-body p-4">
                             <h1 class="card-title text-center pb-3">
                                 Agregar una tarea
@@ -90,6 +89,7 @@
                                 </div>
                                 <textarea id="materials" name="materials" class="form-control" aria-describedby="materials-help"></textarea>
                             </div>
+                            <!-- ALARM -->
                             <div class="text-center p-3 mb-1">
                                 <h3 class="card-title">
                                     Agregar una alarma
@@ -102,8 +102,9 @@
                                 <label for="alarm-datetime" class="form-label">Fecha y hora</label>
                                 <input type="datetime-local" id="alarm-datetime" name="alarm-datetime" class="form-control">
                             </div>
+                            <!-- ALARM SELECTION -->
                             <div style="margin-bottom: 2.5rem;">
-                                <select id="select-alarm" class="form-select mb-3" name="select-alarm" aria-label="Select alarm sound">
+                                <select id="select-alarm" name="select-alarm" class="form-select mb-3" aria-label="Select alarm sound">
                                     <option value="" selected>Elija el sonido de la alarma</option>
                                     <option value="0">Sonido de alarma beep</option>
                                     <option value="1">Sonido de alarma fuerte</option>
@@ -112,8 +113,8 @@
                                     <option value="4">Please be alarmed</option>
                                     <option value="5">Alarma estilo dance</option>
                                     <option value="6">Alarma estilo Beethoven</option>
-                                </select>
-                                <!-- ALARM PLAYERS -->
+                                    <option value="personalizada">Alarma personalizada</option>
+                                </select>                                
                                 <div class="d-flex justify-content-center">
                                     <audio class="alarm-player border rounded-4 bg-light"></audio>
                                     <audio class="alarm-player border rounded-4 bg-light"></audio>
@@ -124,6 +125,21 @@
                                     <audio class="alarm-player border rounded-4 bg-light"></audio>
                                 </div>
                             </div>
+                            <!-- ALARM SEARCH -->
+                            <div style="margin-bottom: 2.5rem;">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="alarm-search" name="alarm-search" class="form-control" placeholder="Buscar alarma" aria-describedby="alarm-submit">
+                                    <input type="image" id="alarm-submit" src="./assets/search.png" alt="imágen de lupa, submit búsqueda"  class="input-group-text btn btn-light border">
+                                </div>
+                                <div class="card align-items-center">
+                                    <img src="..." class="card-img-top" alt="dibujo de onda sonora">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Nombre del Sonido</h4>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
                             <div class="mb-2">
                                 <input type="submit" value="Guardar" class="btn btn-light w-100">
                             </div>

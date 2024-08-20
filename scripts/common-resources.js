@@ -72,12 +72,12 @@ function triggerAlarm(task) {
         Swal.fire({
             title: task.title,
             text: task.dateStr && task.timeStr && `El ${task.dateObj.toLocaleDateString()} a las ${task.dateObj.toLocaleTimeString()}`
-          }).then(() => {
+        }).then(() => {
             if (task.alarmSound) {
                 alarmPlayers[task.alarmSound].pause();
                 alarmPlayers[task.alarmSound].currentTime = 0;
             } 
-          });
+        });
 }
 
 

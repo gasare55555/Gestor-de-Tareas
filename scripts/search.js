@@ -24,7 +24,7 @@ function searchTasks() {
             Swal.fire({
                 title: "No hubieron coincidencias",
                 icon: "error"
-              });
+            });
             tasksContainer.innerHTML = '';  // reseteamos el display
             }();
 

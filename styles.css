@@ -20,6 +20,13 @@ html {
     font-size: xx-large;
 }
 
+#alarm-submit {
+    height: 38px;
+    width: auto;
+    padding-block: 10px;
+    padding-inline: 14px;
+}
+
 #search-label {
     font-size: xx-large;
 }

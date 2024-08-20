@@ -6,6 +6,8 @@ const taskForm = document.getElementById('task-form');
 const tasksContainer = document.getElementById("tasks-container");
 const selectAlarm = document.getElementById("select-alarm");
 let alarmIndex = selectAlarm.value;
+const alarmSearch = document.getElementById("alarm-search");
+const alarmSubmit = document.getElementById("alarm-submit");
 
     // Clase del Objeto Task: con propiedades y métodos específicos.
 class Task {
@@ -170,31 +172,51 @@ function getRandomId() {
     return Math.floor(Math.random() * Date.now()).toString(16);
 }
 
+function hidePlayer(index) {
+    alarmPlayers[index].controls = false;  
+    alarmPlayers[index].pause();
+    alarmPlayers[index].currentTime = 0;
+}
+
+function showPlayer(index) {
+    alarmPlayers[index].controls = true;
+    alarmPlayers[index].play();
+}
+
+function showAlarmSearch() {
+    
+}
+
     // Listeners
     //Listener para disparar la carga del elemento audio correspondiente a la opción seleccionada
 selectAlarm.addEventListener("change", (e) => {
-    if (alarmIndex) {
-        alarmPlayers[alarmIndex].controls = false;  //opción seleccionada previamente
-        alarmPlayers[alarmIndex].pause();
-        alarmPlayers[alarmIndex].currentTime = 0;
+    if (alarmIndex != "" && alarmIndex != "personalizada") {
+        hidePlayer(alarmIndex);  //ocultamos el player anterior
     }
     
-    alarmIndex = e.target.value;  //opción seleccionada actualmente
-    if (alarmIndex) {
-        alarmPlayers[alarmIndex].controls = true;
-        alarmPlayers[alarmIndex].play();
+    alarmIndex = e.target.value;  
+
+    if (alarmIndex != "" && alarmIndex != "personalizada") {
+        showPlayer(alarmIndex);  //mostramos el nuevo player
     }
+    if (alarmIndex == "personalizada") {
+        showAlarmSearch();
+    }
+
 });
+
+alarmSearch.addEventListener("keydown", (e) => {
+    
+})
 
    // Listener para disparar la creación de tareas, guardarlas en tasks, en el storage y para actualizar display
 taskForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+    e.preventDefault();  
 
-    if (alarmIndex) {
-        alarmPlayers[alarmIndex].controls = false;  //opción seleccionada actualmente
-        alarmPlayers[alarmIndex].pause();
-        alarmPlayers[alarmIndex].currentTime = 0;
+    if (alarmIndex != "" && alarmIndex != "personalizada") {
+        hidePlayer(alarmIndex);  //opción seleccionada actualmente  
     }
+
     const form = new FormData(taskForm);
     const task = createTask(form);
     addTask(task);
