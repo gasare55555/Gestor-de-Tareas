@@ -102,9 +102,9 @@
                                 <label for="alarm-datetime" class="form-label">Fecha y hora</label>
                                 <input type="datetime-local" id="alarm-datetime" name="alarm-datetime" class="form-control">
                             </div>
-                            <!-- ALARM SELECTION -->
-                            <div style="margin-bottom: 2.5rem;">
-                                <select id="select-alarm" name="select-alarm" class="form-select mb-3" aria-label="Select alarm sound">
+                            <!-- ALARM SELECT -->
+                            <div>
+                                <select id="alarm-select-input" name="alarm-select-input" class="form-select mb-3" aria-label="Select alarm sound">
                                     <option value="" selected>Elija el sonido de la alarma</option>
                                     <option value="0">Sonido de alarma beep</option>
                                     <option value="1">Sonido de alarma fuerte</option>
@@ -116,45 +116,62 @@
                                     <option value="personalizada">Alarma personalizada</option>
                                 </select>                                
                                 <div class="d-flex justify-content-center">
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
-                                    <audio class="alarm-player border rounded-4 bg-light"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
+                                    <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
                                 </div>
                             </div>
                             <!-- ALARM SEARCH -->
                             <div style="margin-bottom: 2.5rem;">
-                                <div class="input-group mb-3">
-                                    <input type="text" id="alarm-search" name="alarm-search" class="form-control" placeholder="Buscar alarma" aria-describedby="alarm-submit">
-                                    <input type="image" id="alarm-submit" src="./assets/search.png" alt="imágen de lupa, submit búsqueda"  class="input-group-text btn btn-light border">
+                                <div id="search-input-group" class="input-group px-4 pt-3 mb-3 d-none">
+                                    <input id="search-input" type="text" name="search-input" class="form-control" placeholder="Search for sound" aria-describedby="search-submit">
+                                    <input id="search-submit" type="image" src="./assets/search.png" alt="magnifying glass image, submit search"  class="input-group-text btn btn-light border">
                                 </div>
-                                <div class="card align-items-center">
-                                    <img src="..." class="card-img-top" alt="dibujo de onda sonora">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Nombre del Sonido</h4>
+
+                                <div id="search-carousel" class="carousel slide px-4 d-none">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img id="sound-image" src="" alt="sound wave drawing" class="d-block w-100 rounded">
+                                            <div id="sound-title-container" class="carousel-caption">
+                                                <h7 id="sound-title">Sound Name</h7>               
+                                            </div>                                          
+                                        </div>           
+                                    </div>
+                                    <img id="play-button" src="./assets/play.png" alt="play button">
+                                    <button class="carousel-control-prev ps-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next pe-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    <div id="search-audio-container">
+                                        <!-- <audio class="search-audio-element"></audio> ... -->
                                     </div>
                                 </div>
-                                
                             </div>
 
                             <div class="mb-2">
-                                <input type="submit" value="Guardar" class="btn btn-light w-100">
+                                <input type="submit" value="save" class="btn btn-light w-100">
                             </div>
                         </form>
                     </div>
                 </div>
     
                 <!-- TASKS LIST -->
-                <div class="col-md-7 col-lg-8" id="tasks-container" >
-                    <!-- Generado en JS -->
+                <div class="col-md-7 col-lg-8" id="task-container" >
+                    <!-- Generated in JS -->
                 </div>
     
             </div>
         </div>
     </main>
+    
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Sweetalert -->
