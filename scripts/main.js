@@ -69,13 +69,6 @@ prevButton.addEventListener("click", () => {
 });
 
 
-    // Listener para disparar el borrado de tareas, del objeto tasks y del storage, y para actualizar display
-taskContainer.addEventListener('click', (e) => {
-    // Ejecuta solo si presionamos en el botón borrar
-    if (e.target.className.includes("btn")){
-        deleteTask(tasks, e.target.id);
-        showTasks(taskContainer, tasks, colorCounter, taskCounter); 
-    }
-});
+
 
     // Abajo va common-listeners script

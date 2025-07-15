@@ -54,17 +54,17 @@ class Task {
 function createTask() {
     form = new FormData(formElement);
     task = new Task(form);
+    formElement.reset();  // clears the form data using the reset() method
 }
 
     // Function to add tasks to the "tasks" array, sort them, and save them to storage
 function addTask() {
     tasks.push(task);
     saveTasksToStorage();
-    formElement.reset();  // We clear the form using the reset() method
 }
 
     // Function to delete a specific task by ID and update storage
-function deleteTask(id) {
+export function deleteTask(id) {
     tasks.forEach((task, index) => {
         (task.id === id) && tasks.splice(index, 1);
         });

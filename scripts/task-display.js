@@ -1,5 +1,5 @@
     // Imports
-import { tasks } from "./task-management"; 
+import { tasks, deleteTask } from "./task-management"; 
 
     // Data
 const colors = ["text-bg-primary", "text-bg-success", "text-bg-danger"];
@@ -99,3 +99,12 @@ export function showTasks() {
     taskCard.scrollIntoView();  // scrolls to the latest task
     taskCounter = 0;
 }
+
+    // Listener para disparar el borrado de tareas, del objeto tasks y del storage, y para actualizar display
+taskContainer.addEventListener('click', (e) => {
+    // Ejecuta solo si presionamos en el botón borrar
+    if (e.target.className.includes("btn")){
+        deleteTask(e.target.id);
+        showTasks(); 
+    }
+});
