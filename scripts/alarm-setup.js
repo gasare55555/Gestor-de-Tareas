@@ -36,7 +36,7 @@ export function stopPlayer() {
 
     // ------------- Fetching and loading sounds ----------------
     // Function to perform multiple simultaneous fetch requests
-function startMultipleRequests(selectOptions) {
+export function startMultipleFetch() {
     selectOptions.forEach((selectOption, index) => {
         fetchSoundInstance(selectOption, index); 
     })
@@ -75,7 +75,7 @@ export function setAlarm(task) {
 }
 
     // Function to initialize all task alarms on DOM load
-function setAlarms() {
+export function setAlarms() {
     tasks.forEach((task) => {
         if (task.alarmDateObj && calculateDelay(task) > 0) {
             setTimeout(() => {

@@ -1,5 +1,5 @@
     // Imports
-import { tasks, deleteTask } from "./task-management"; 
+import { tasks, saveTasksToStorage } from "./task-management"; 
 
     // Data
 const colors = ["text-bg-primary", "text-bg-success", "text-bg-danger"];
@@ -11,6 +11,14 @@ let taskCard = {};
 let itemContainer = {};
 let taskCounter = 0;
 
+
+    // Function to delete a specific task by ID and update storage
+function deleteTask(id) {
+    tasks.forEach((task, index) => {
+        (task.id === id) && tasks.splice(index, 1);
+        });
+    saveTasksToStorage(); 
+}
 
     //Function to change card color
 function traverseColors() {
@@ -100,9 +108,9 @@ export function showTasks() {
     taskCounter = 0;
 }
 
-    // Listener para disparar el borrado de tareas, del objeto tasks y del storage, y para actualizar display
+    // Listener to delete task from object and storage, and update the UI
 taskContainer.addEventListener('click', (e) => {
-    // Ejecuta solo si presionamos en el botón borrar
+    // Execute only if we click on delete button
     if (e.target.className.includes("btn")){
         deleteTask(e.target.id);
         showTasks(); 

@@ -1,6 +1,6 @@
 // Imports
 import { showTasks } from "./task-display";
-import { stopPlayer, setAlarm } from "./alarm-setup";
+import { stopPlayer, setAlarm, setAlarms, startMultipleFetch } from "./alarm-setup";
 
 // Data
 const formElement = document.getElementById('task-form');
@@ -63,15 +63,7 @@ function addTask() {
     saveTasksToStorage();
 }
 
-    // Function to delete a specific task by ID and update storage
-export function deleteTask(id) {
-    tasks.forEach((task, index) => {
-        (task.id === id) && tasks.splice(index, 1);
-        });
-    saveTasksToStorage(); 
-}
-
-function saveTasksToStorage() {
+export function saveTasksToStorage() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
@@ -79,12 +71,33 @@ function getRandomId() {
     return Math.floor(Math.random() * Date.now()).toString(16);
 }
 
-   // Listener para disparar la creación de tareas, guardarlas en tasks, en el storage y para actualizar display
+   // Listener to trigger task creation — saves to array and storage, updates display, and initializes alarms
 formElement.addEventListener("submit", (e) => {
     e.preventDefault();  
-    stopPlayer();  //stop sound from currently selected option  
+    stopPlayer();  //stops sound from currently selected option  
     createTask();
     addTask();
     showTasks();
     setAlarm(task);
+});
+
+    // Listener to recover data from local storage, update display, init task alarms, and load alarm sounds in select input
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("tasks")) {
+        tasks.push(...JSON.parse(localStorage.getItem("tasks")));
+        // Re-convert date strings from JSON.parse back into Date objects
+        tasks.forEach((task) => {
+            if (task.dateObj) {
+                task.dateObj = new Date(task.dateObj);
+            }    
+            if (task.alarmDateObj) {
+                task.alarmDateObj = new Date(task.alarmDateObj);
+            }  
+        });
+        
+        document.title == "Task Manager" && showTasks();
+        setAlarms();
+    }
+
+    startMultipleFetch();  // to load alarm sounds in select input
 });
