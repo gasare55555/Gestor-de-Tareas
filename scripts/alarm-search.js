@@ -11,7 +11,7 @@ const searchNavigation = {
     nextButton: document.getElementsByClassName("carousel-control-next")[0],
     prevButton: document.getElementsByClassName("carousel-control-prev")[0],
     index: 0,
-    atBoundary: false,
+    isPossible: false,
 };
 
 const searchPlayer = {
@@ -94,3 +94,55 @@ function showSearchSounds() {
     searchNavigation.soundTitle.innerText = searchResult.results[searchNavigation.index].name;
     searchNavigation.soundImage.onload = () => window.scrollTo(0, scrollPosition);
 }
+
+    // ------------------------ Listeners -----------------------------
+    // Listener to submit search input on Enter key
+searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        searchAlarmSounds();
+    }
+});
+
+    // Listener to submit search input on click
+searchSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    searchAlarmSounds();
+});
+
+    // Listener to play result previews on click
+searchPlayer.playButton.addEventListener("click", () => {
+    if (searchPlayer.isPlaying) {
+        searchPlayer.audioElements[searchNavigation.index].pause();
+        searchPlayer.isPlaying = false;
+    } else {
+        searchPlayer.audioElements[searchNavigation.index].play();
+        searchPlayer.isPlaying = true;
+    }  
+});
+
+    // Listener to show next result preview
+searchNavigation.nextButton.addEventListener("click", () => {
+    if (searchPlayer.isPlaying) {
+        searchPlayer.audioElements[searchNavigation.index].pause();
+        searchPlayer.isPlaying = false;
+    }
+    searchNavigation.index == 0 && (searchNavigation.isPossible = true);
+    searchNavigation.index != 14 && searchNavigation.index++;
+    searchNavigation.isPossible && showSearchSounds();
+    searchNavigation.index == 14 && (searchNavigation.isPossible = false); 
+    console.log(searchNavigation.index);
+});
+
+    // Listener to show previous result preview
+searchNavigation.prevButton.addEventListener("click", () => {
+    if (searchPlayer.isPlaying) {
+        searchPlayer.audioElements[searchNavigation.index].pause();
+        searchPlayer.isPlaying = false;
+    }
+    searchNavigation.index == 14 && (searchNavigation.isPossible = true);
+    searchNavigation.index != 0 && searchNavigation.index--;
+    searchNavigation.isPossible && showSearchSounds();
+    searchNavigation.index == 0 && (searchNavigation.isPossible = false);
+    console.log(searchNavigation.index);
+});
