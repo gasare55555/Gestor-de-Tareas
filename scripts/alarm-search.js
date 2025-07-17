@@ -24,12 +24,12 @@ const searchPlayer = {
 const APIKEY = "WqH2tiQ4KnqLXBjOegB3JhanztNAGi7Z2V0E9zPP";
 
     // Function to show search input
-function showSearchInput() {
+export function showSearchInput() {
     searchInputGroup.classList.remove("d-none");
 }
 
     // Function to hide the search section and stop the current player
-function hideSearchSection() {
+export function hideSearchSection() {
     searchInputGroup.classList.add("d-none");
     !searchNavigation.carousel.classList.contains("d-none") && searchNavigation.carousel.classList.add("d-none");
     if (searchPlayer.audioElements.length) {

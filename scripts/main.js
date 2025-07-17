@@ -1,26 +1,5 @@
 
     // ------------------------ Listeners -----------------------------
-    //Listener para disparar la carga del elemento audio correspondiente a la opción seleccionada
-selectAlarm.addEventListener("change", (e) => {
-    if (selectIndex != "" && selectIndex != "personalizada") {
-        stopPlayer(selectPlayer, selectIndex);  //ocultamos el player anterior
-    }
-
-    if (selectIndex == "personalizada") {
-        hideSearchSection(searchInputGroup, searchNavigation, searchPlayer, searchInput);  //ocultamos la sección de búsqueda
-    }
-    
-    selectIndex = e.target.value;  
-
-    if (selectIndex != "" && selectIndex != "personalizada") {
-        startPlayer(selectPlayer, selectIndex);  //we show and start the player
-    }
-
-    if (selectIndex == "personalizada") {
-        showSearchInput(searchInputGroup);  //we show the search section
-    }
-
-});
 
 searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {

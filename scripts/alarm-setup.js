@@ -1,9 +1,10 @@
     // Imports
 import { tasks } from "./task-management";
+import { hideSearchSection, showSearchInput } from "./alarm-search";
 
     // Data
 const selectInput = document.getElementById("alarm-select-input");
-const selectIndex = { value:  selectInput.value, };
+let selectIndex = selectInput.value;
 const selectOptions = [
     {id: 210612, description: "Beeping alarm sound"},
     {id: 128138, description: "Loud alarm sound"},
@@ -20,17 +21,17 @@ const selectPlayer = {
 
     // --------------- Player functions ------------------
     // Function to show and start player
-function startPlayer(selectPlayer, selectIndex) {
-    selectPlayer.audioElements[selectIndex.value].controls = true;
-    selectPlayer.audioElements[selectIndex.value].play();
+function startPlayer() {
+    selectPlayer.audioElements[selectIndex].controls = true;
+    selectPlayer.audioElements[selectIndex].play();
 }
 
     // Function to hide and stop player
 export function stopPlayer() {
-    if (selectIndex.value != "" && selectIndex.value != "personalizada") {
-        selectPlayer.audioElements[selectIndex.value].controls = false;  
-        selectPlayer.audioElements[selectIndex.value].pause();
-        selectPlayer.audioElements[selectIndex.value].currentTime = 0;
+    if (selectIndex != "" && selectIndex != "custom") {
+        selectPlayer.audioElements[selectIndex].controls = false;  
+        selectPlayer.audioElements[selectIndex].pause();
+        selectPlayer.audioElements[selectIndex].currentTime = 0;
     }
 }
 
@@ -99,6 +100,27 @@ function triggerAlarm(task) {
             } 
         });
 }
+    // ------------------------ Listeners -----------------------------
+    //Listener para disparar la carga del elemento audio correspondiente a la opción seleccionada
+selectInput.addEventListener("change", (e) => {
+    if (selectIndex != "" && selectIndex != "custom") {
+        stopPlayer();  // hides and stops previous player
+    }
+
+    if (selectIndex == "custom") {
+        hideSearchSection(); 
+    }
+    
+    selectIndex = e.target.value;  
+
+    if (selectIndex != "" && selectIndex != "custom") {
+        startPlayer();  // shows and starts the player
+    }
+
+    if (selectIndex == "custom") {
+        showSearchInput();
+    }
+});
 
 
 
