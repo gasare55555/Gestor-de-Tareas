@@ -1,6 +1,6 @@
 // Imports
-import { showTasks } from "./task-display";
-import { stopPlayer, setAlarm, setAlarms, startMultipleFetch } from "./alarm-setup";
+import { showTasks } from "./task-display.js";
+import { stopPlayer, setAlarm, setAlarms, startMultipleFetch } from "./alarm-setup.js";
 
 // Data
 const formElement = document.getElementById('task-form');

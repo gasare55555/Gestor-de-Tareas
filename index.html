@@ -1,4 +1,4 @@
-<!-- Página principal para añadir tareas (pages/search.html para buscar tareas) -->
+<!-- Main page to add tasks and set alarms (pages/search.html to serch for tasks) -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Sweetalert script al final del body-->
+    <!-- Sweetalert script at the end of body section-->
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./styles.css">
     <title>Task Manager</title>
@@ -15,22 +15,22 @@
 </head>
 
 <body class="bg-light">
-    <!-- Navigation -->
+    <!-- NAVIGATION -->
     <header>
         <div class="card">
             <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark p-3" data-bs-theme="dark">
                 <div class="container">
-                    <a class="navbar-brand" href="#">Gestor de Tareas</a>
+                    <a class="navbar-brand" href="#">Task Manager</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="./index.html">Añadir Tarea</a>
+                                <a class="nav-link active" aria-current="page" href="./index.html">Add Task</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="./pages/search.html">Buscar Tarea</a>
+                                <a class="nav-link" href="./pages/search.html">Search for Task</a>
                             </li>
                         </ul>
                     </div>
@@ -38,7 +38,7 @@
             </nav>
         </div>
     </header>
-    <!-- APPLICATION -->
+    <!-- MAIN -->
     <main>
         <div class="container-fluid">
             <div class="row pt-4">
@@ -48,58 +48,58 @@
                     <div class="card text-bg-dark mb-4 p-2">
                         <form id="task-form" class="card-body p-4">
                             <h1 class="card-title text-center pb-3">
-                                Agregar una tarea
+                                Add a task
                             </h1>
                             <div class="mb-3">
-                                <label for="title" class="form-label">Título</label>
+                                <label for="title" class="form-label">Title</label>
                                 <input type="text" id="title" name="title" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="description" class="form-label">Descripción</label>
-                                    <span id="description-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                    <label for="description" class="form-label">Description</label>
+                                    <span id="description-help" class="form-text text-bg-dark me-2">* optional</span>
                                 </div>
                                 <textarea id="description" name="description" class="form-control" rows="3" aria-describedby="description-help"></textarea>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="datetime" class="form-label">Fecha y hora</label>
-                                    <span id="datetime-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                    <label for="datetime" class="form-label">Date and time</label>
+                                    <span id="datetime-help" class="form-text text-bg-dark me-2">* optional</span>
                                 </div>
                                 <input type="datetime-local" id="datetime" name="datetime" class="form-control" aria-describedby="datetime-help">
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="place" class="form-label">Lugar</label>
-                                    <span id="place-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                    <label for="place" class="form-label">Place</label>
+                                    <span id="place-help" class="form-text text-bg-dark me-2">* optional</span>
                                 </div>
                                 <textarea id="place" name="place" class="form-control" rows="1" aria-describedby="place-help"></textarea>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="people" class="form-label">Personas</label>
-                                    <span id="people-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                    <label for="people" class="form-label">People</label>
+                                    <span id="people-help" class="form-text text-bg-dark me-2">* optional</span>
                                 </div>
                                 <textarea id="people" name="people" class="form-control" aria-describedby="people-help"></textarea>
                             </div>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between">
-                                    <label for="materials" class="form-label">Materiales</label>
-                                    <span id="materials-help" class="form-text text-bg-dark me-2">* opcional</span>
+                                    <label for="materials" class="form-label">Materials</label>
+                                    <span id="materials-help" class="form-text text-bg-dark me-2">* optional</span>
                                 </div>
                                 <textarea id="materials" name="materials" class="form-control" aria-describedby="materials-help"></textarea>
                             </div>
                             <!-- ALARM -->
                             <div class="text-center p-3 mb-1">
                                 <h3 class="card-title">
-                                    Agregar una alarma
+                                    Add an alarm
                                 </h3>
                                 <div class="form-text text-bg-dark">
-                                    * opcional
+                                    * optional
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="alarm-datetime" class="form-label">Fecha y hora</label>
+                                <label for="alarm-datetime" class="form-label">Date and time</label>
                                 <input type="datetime-local" id="alarm-datetime" name="alarm-datetime" class="form-control">
                             </div>
                             <!-- ALARM SELECT -->
@@ -132,7 +132,7 @@
                                     <input id="search-submit" type="image" src="./assets/search.png" alt="magnifying glass image, submit search"  class="input-group-text btn btn-light border">
                                 </div>
 
-                                <div id="search-carousel" class="carousel slide px-4 d-none">
+                                <div id="search-carousel" class="carousel slide px-4 d-none fade">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
                                             <img id="sound-image" src="" alt="sound wave drawing" class="d-block w-100 rounded">
@@ -142,11 +142,11 @@
                                         </div>           
                                     </div>
                                     <img id="play-button" src="./assets/play.png" alt="play button">
-                                    <button class="carousel-control-prev ps-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="prev">
+                                    <button id="prev-button" class="carousel-control-prev ps-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
                                     </button>
-                                    <button class="carousel-control-next pe-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="next">
+                                    <button id="next-button" class="carousel-control-next pe-4" type="button" data-bs-target="#carouselSearch" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
                                     </button>
@@ -157,7 +157,7 @@
                             </div>
 
                             <div class="mb-2">
-                                <input type="submit" value="save" class="btn btn-light w-100">
+                                <input type="submit" value="Save" class="btn btn-light w-100">
                             </div>
                         </form>
                     </div>
@@ -176,11 +176,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Aplicacion -->
-    <script type="module" src="./scripts/task-management.js"></script>
-    <script type="module" src="./scripts/task-display.js"></script>    
-    <script type="module" src="./scripts/alarm-setup.js"></script>
-    <script type="module" src="./scripts/alarm-search.js"></script>
+    <!-- App -->
+    <script type="module" src="./scripts/pages/home.js"></script>
 </body>
 
 </html>

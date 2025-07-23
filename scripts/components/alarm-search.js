@@ -1,4 +1,7 @@
-    // data
+   // Imports
+import { APIKEY } from "./alarm-setup.js";
+
+   // Data
 const searchInputGroup = document.getElementById("search-input-group");
 const searchInput = document.getElementById("search-input");
 const searchSubmit = document.getElementById("search-submit");
@@ -8,10 +11,11 @@ const searchNavigation = {
     carousel: document.getElementById("search-carousel"),
     soundImage: document.getElementById("sound-image"),
     soundTitle: document.getElementById("sound-title"),
-    nextButton: document.getElementsByClassName("carousel-control-next")[0],
-    prevButton: document.getElementsByClassName("carousel-control-prev")[0],
+    nextButton: document.getElementById("next-button"),
+    prevButton: document.getElementById("prev-button"),
     index: 0,
     isPossible: false,
+    limit: 14,
 };
 
 const searchPlayer = {
@@ -21,21 +25,21 @@ const searchPlayer = {
     isPlaying: false,
 };
 
-const APIKEY = "WqH2tiQ4KnqLXBjOegB3JhanztNAGi7Z2V0E9zPP";
 
-    // Function to show search input
+    // Function to show search input (used in alarm-setup)
 export function showSearchInput() {
     searchInputGroup.classList.remove("d-none");
+    window.scrollTo(0, window.scrollY + 100);
 }
 
-    // Function to hide the search section and stop the current player
+    // Function to hide the search section and stop the current player (used in alarm-setup)
 export function hideSearchSection() {
     searchInputGroup.classList.add("d-none");
-    !searchNavigation.carousel.classList.contains("d-none") && searchNavigation.carousel.classList.add("d-none");
-    if (searchPlayer.audioElements.length) {
-        searchPlayer.audioElements[searchNavigation.index].pause();
-        searchPlayer.audioElements[searchNavigation.index].currentTime = 0;
-    }
+    if (!searchNavigation.carousel.classList.contains("d-none")) {
+        searchNavigation.carousel.classList.add("d-none");
+        searchNavigation.carousel.classList.toggle("show");
+        searchPlayer.isPlaying && stopPlayer();
+    } 
     searchInput.value = "";
 }
 
@@ -50,10 +54,7 @@ async function searchAlarmSounds() {
             searchResult = await response.json();
             console.log(searchResult);
             if (searchResult.count) {
-                if (searchPlayer.isPlaying) {
-                    searchPlayer.audioElements[searchNavigation.index].pause();
-                    searchPlayer.isPlaying = false;
-                }
+                searchPlayer.isPlaying && stopPlayer();
                 searchPlayer.audioContainer.innerHTML = "";  // clears previous audio elements
                 searchNavigation.index = 0;  // sets the index at initial position
                 loadSearchSounds();
@@ -70,29 +71,54 @@ async function searchAlarmSounds() {
 function loadSearchSounds() {
     searchResult.results.forEach((result) => {
         searchPlayer.audioContainer.innerHTML += `
-        <audio preload="none" src="${result.previews["preview-hq-mp3"]}" class="search-audio-element"></audio>`; 
+        <audio preload="none" src="${result.previews["preview-hq-mp3"]}" class="search-audio-element" data-is-listener-added="false"></audio>`; 
     });
     searchPlayer.audioElements = document.getElementsByClassName("search-audio-element");
 }
 
     // Function to display search results in the carousel
 function showSearchSounds() {
-    const scrollPosition = window.scrollY;
     if (searchNavigation.carousel.classList.contains("d-none")) {
+        searchNavigation.carousel.classList.remove("d-none");
         setTimeout(() => {
-            searchNavigation.carousel.classList.remove("d-none");
-        }, 300); 
+            searchNavigation.carousel.classList.toggle("show");
+        }, 1000);  
+    } else {
+        searchNavigation.carousel.classList.toggle("show");
+        setTimeout(() => {
+            searchNavigation.carousel.classList.toggle("show");
+        }, 250);   
     }
-    if (!searchNavigation.carousel.classList.contains("d-none")) {
-        searchNavigation.carousel.classList.add("d-none");
-        setTimeout(() => {    
-            searchNavigation.carousel.classList.remove("d-none");
-            window.scrollTo(0, scrollPosition);
-        }, 300); 
-    }
+
     searchNavigation.soundImage.src = searchResult.results[searchNavigation.index].images.waveform_m;
-    searchNavigation.soundTitle.innerText = searchResult.results[searchNavigation.index].name;
-    searchNavigation.soundImage.onload = () => window.scrollTo(0, scrollPosition);
+    searchNavigation.soundImage.onload = () => {
+        searchNavigation.soundTitle.innerText = searchResult.results[searchNavigation.index].name;
+        setTimeout(() => {
+            window.scrollTo(0, window.scrollY + 300); 
+        }, 300);   
+    };
+}
+
+    // Function to start playback and switch the image to a pause icon
+function startPlayer() {
+    searchPlayer.playButton.src = "./assets/pause.png";
+    searchPlayer.audioElements[searchNavigation.index].play();
+    searchPlayer.isPlaying = true;
+}
+
+    // Function to pause playback and switch the image to a play icon.
+function pausePlayer() {
+    searchPlayer.playButton.src = "./assets/play.png";
+    searchPlayer.audioElements[searchNavigation.index].pause();
+    searchPlayer.isPlaying = false;
+}
+
+    // Function to stop playback and switch the image to a play icon.
+function stopPlayer() {
+    searchPlayer.playButton.src = "./assets/play.png";
+    searchPlayer.audioElements[searchNavigation.index].pause();
+    searchPlayer.audioElements[searchNavigation.index].currentTime = 0;
+    searchPlayer.isPlaying = false;
 }
 
     // ------------------------ Listeners -----------------------------
@@ -112,37 +138,41 @@ searchSubmit.addEventListener("click", (e) => {
 
     // Listener to play result previews on click
 searchPlayer.playButton.addEventListener("click", () => {
-    if (searchPlayer.isPlaying) {
-        searchPlayer.audioElements[searchNavigation.index].pause();
-        searchPlayer.isPlaying = false;
+    if (!searchPlayer.isPlaying) {
+        startPlayer();
+        if (searchPlayer.audioElements[searchNavigation.index].dataset.isListenerAdded === "false") {
+            searchPlayer.audioElements[searchNavigation.index].addEventListener("ended", () => {
+                searchPlayer.playButton.src = "./assets/play.png";
+                searchPlayer.isPlaying = false;
+            }); 
+            searchPlayer.audioElements[searchNavigation.index].dataset.isListenerAdded = "true";
+        }
     } else {
-        searchPlayer.audioElements[searchNavigation.index].play();
-        searchPlayer.isPlaying = true;
+        pausePlayer();
     }  
 });
 
     // Listener to show next result preview
 searchNavigation.nextButton.addEventListener("click", () => {
-    if (searchPlayer.isPlaying) {
-        searchPlayer.audioElements[searchNavigation.index].pause();
-        searchPlayer.isPlaying = false;
+    searchResult.count < 15
+        ? (searchNavigation.limit = searchNavigation.index - 1) 
+        : (searchNavigation.limit = 14);
+    searchNavigation.isPossible = searchNavigation.index < searchNavigation.limit;    
+    if (searchNavigation.isPossible) {
+        searchPlayer.isPlaying && stopPlayer();
+        searchNavigation.index++;
+        showSearchSounds();
     }
-    searchNavigation.index == 0 && (searchNavigation.isPossible = true);
-    searchNavigation.index != 14 && searchNavigation.index++;
-    searchNavigation.isPossible && showSearchSounds();
-    searchNavigation.index == 14 && (searchNavigation.isPossible = false); 
     console.log(searchNavigation.index);
 });
 
     // Listener to show previous result preview
 searchNavigation.prevButton.addEventListener("click", () => {
-    if (searchPlayer.isPlaying) {
-        searchPlayer.audioElements[searchNavigation.index].pause();
-        searchPlayer.isPlaying = false;
+    searchNavigation.isPossible = searchNavigation.index > 0;    
+    if (searchNavigation.isPossible) {
+        searchPlayer.isPlaying && stopPlayer();
+        searchNavigation.index--;
+        showSearchSounds();
     }
-    searchNavigation.index == 14 && (searchNavigation.isPossible = true);
-    searchNavigation.index != 0 && searchNavigation.index--;
-    searchNavigation.isPossible && showSearchSounds();
-    searchNavigation.index == 0 && (searchNavigation.isPossible = false);
     console.log(searchNavigation.index);
 });

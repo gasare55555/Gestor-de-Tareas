@@ -1,5 +1,5 @@
     // Imports
-import { tasks, saveTasksToStorage } from "./task-management"; 
+import { tasks, saveTasksToStorage } from "./task-management.js"; 
 
     // Data
 const colors = ["text-bg-primary", "text-bg-success", "text-bg-danger"];
@@ -7,7 +7,7 @@ let color = "";
 let colorCounter = 0;
 
 const taskContainer = document.getElementById("task-container");
-let taskCard = {};
+let taskCard = null;
 let itemContainer = {};
 let taskCounter = 0;
 
@@ -104,7 +104,7 @@ export function showTasks() {
         taskCounter++;  
     });
 
-    taskCard.scrollIntoView();  // scrolls to the latest task
+    taskCard && taskCard.scrollIntoView();  // scrolls to the latest task
     taskCounter = 0;
 }
 

@@ -1,10 +1,11 @@
     // Imports
-import { tasks } from "./task-management";
-import { hideSearchSection, showSearchInput } from "./alarm-search";
+import { tasks } from "./task-management.js";
+import { hideSearchSection, showSearchInput } from "./alarm-search.js";
 
     // Data
 const selectInput = document.getElementById("alarm-select-input");
 let selectIndex = selectInput.value;
+
 const selectOptions = [
     {id: 210612, description: "Beeping alarm sound"},
     {id: 128138, description: "Loud alarm sound"},
@@ -18,6 +19,9 @@ const selectPlayer = {
     soundInstances: [],
     audioElements: document.getElementsByClassName("select-audio-element"),
 };
+
+export const APIKEY = "WqH2tiQ4KnqLXBjOegB3JhanztNAGi7Z2V0E9zPP";
+
 
     // --------------- Player functions ------------------
     // Function to show and start player

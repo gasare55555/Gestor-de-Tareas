@@ -27,12 +27,17 @@ html {
     padding-inline: 14px;
 }
 
+.carousel-inner {
+    padding-block: 16px;
+    background-color: black !important;
+}
+
 #sound-title-container {
     margin-bottom: 0;
     padding-bottom: 0;
     right: 9%;
     left: 9%;
-    bottom: 0.6rem;
+    bottom: 0;
     display: flex;
     justify-content: center;
 }
@@ -58,10 +63,25 @@ html {
     
 }
 
+.carousel-control-prev, .carousel-control-next {
+    opacity: 1;
+}
+
 #search-label {
     font-size: xx-large;
 }
 
 .input-group-text {
     padding: 14px 18px;
+}
+
+/* Utilities */
+
+.fade {
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.show {
+    opacity: 1;
 }
