@@ -45,7 +45,7 @@ function showTasks(taskContainer, searchResult, colorCounter, taskCounter) {
                     <div class="card-body d-flex align-items-center w-100 px-4 py-0" style="height: 80%;">
                         <ul class="list-group list-group-flush w-100">
                             <li class="list-group-item ${color}">
-                                <h5 class="card-title">Título</h5>
+                                <h4 class="card-title">Título</h4>
                                 <p class="card-text">${task.title}</p>
                             </li>
                         `;

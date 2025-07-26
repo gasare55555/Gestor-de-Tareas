@@ -42,7 +42,7 @@ export function showTasks() {
                     <div class="card-body d-flex align-items-center w-100 px-4 py-0" style="height: 80%;">
                         <ul class="list-group list-group-flush w-100">
                             <li class="list-group-item ${color}">
-                                <h5 class="card-title">Title</h5>
+                                <h4 class="card-title">Title</h4>
                                 <p class="card-text">${task.title}</p>
                             </li>
         `;
