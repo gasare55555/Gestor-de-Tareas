@@ -73,7 +73,6 @@ searchInput.addEventListener("keydown", (e) => {
             onSearchSubmission.value = true;
             showSpinner();
             searchAlarmSounds();
-            onSearchSubmission.value = false;
         }
     }
 });
@@ -85,6 +84,5 @@ searchSubmit.addEventListener("click", (e) => {
         onSearchSubmission.value = true;
         showSpinner();
         searchAlarmSounds();
-        onSearchSubmission.value = false;
     }
 });

@@ -30,6 +30,7 @@ export function showSpinner() {
         carousel.style.height = "225px";
         spinnerContainer.classList.remove("d-none");
         spinnerContainer.appendChild(spinner.el);
+        window.scrollTo(0, window.scrollY + 300);
     } else {
         carousel.classList.remove("transition", "show");
         spinnerContainer.classList.remove("d-none");
@@ -62,7 +63,8 @@ export function showSearchSounds() {
         soundImage.onload = () => {
             soundTitle.innerText = searchResult.current.results[navigationIndex.value].name;
         };
-        window.scrollTo(0, window.scrollY + 300);
+        onSearchSubmission.value = false;
+        console.log("search submission");
     } else {
         carousel.classList.remove("show");
         setTimeout(() => {
@@ -72,7 +74,8 @@ export function showSearchSounds() {
         soundImage.onload = () => {
             soundTitle.innerText = searchResult.current.results[navigationIndex.value].name;
         };
-    }    
+    }
+    console.log(navigationIndex.value);    
 }
 
     // ------------------------ Listeners -----------------------------
@@ -83,24 +86,28 @@ nextButton.addEventListener("click", () => {
         : (navigationLimit = 14);
     navigationIsPossible = navigationIndex.value < navigationLimit;    
     if (navigationIsPossible) {
+        nextButton.classList.contains("warning") && nextButton.classList.remove("warning");
         stopPlayer();
         !isPlaying && (audioElements[navigationIndex.value].currentTime = 0);
         navigationIndex.value++;
         startPlayer();
         showSearchSounds();
+    } else {
+        !nextButton.classList.contains("warning") && nextButton.classList.add("warning");
     }
-    console.log(navigationIndex.value);
 });
 
     // Listener to show previous result preview
 prevButton.addEventListener("click", () => {
     navigationIsPossible = navigationIndex.value > 0;    
     if (navigationIsPossible) {
+        prevButton.classList.contains("warning") && prevButton.classList.remove("warning");
         stopPlayer();
         !isPlaying && (audioElements[navigationIndex.value].currentTime = 0);
         navigationIndex.value--;
         startPlayer();
         showSearchSounds();
+    } else {
+        !prevButton.classList.contains("warning") && prevButton.classList.add("warning");
     }
-    console.log(navigationIndex.value);
 });
