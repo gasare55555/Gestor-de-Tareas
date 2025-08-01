@@ -1,6 +1,11 @@
 // Imports
 import { showTasks } from "./task-display.js";
-import { stopPlayer, setAlarm, setAlarms, startMultipleFetch } from "./alarm-setup.js";
+import { setAlarm, setAlarms } from "./alarm-setup.js";
+import { stopPlayer as stopSelectPlayer, startMultipleFetch } from "./alarm-select.js";
+import { searchResult } from "./alarm-search/alarm-search.js";
+import { carousel, hideSearchSection, navigationIndex } from "./alarm-search/alarm-search-display.js";
+import { stopPlayer as stopSearchPlayer } from "./alarm-search/alarm-search-play.js";
+
 
 // Data
 const formElement = document.getElementById('task-form');
@@ -18,15 +23,16 @@ class Task {
         this.timeStr = this.datetimeStr && this.datetimeStr.split("T")[1];
         [this.year, this.month, this.day] = this.dateStr && this.processDate();
         [this.hour, this.minute] = this.timeStr && this.processTime();
-        this.dateObj = this.processDateObj();
+        this.dateObj = this.createDateObj();
         this.place = form.get("place");
         this.people = form.get("people");
         this.materials = form.get("materials");
         this.alarmDateTimeStr = form.get("alarm-datetime");
         this.alarmDateStr = this.alarmDateTimeStr && this.alarmDateTimeStr.split("T")[0];
         this.alarmTimeStr = this.alarmDateTimeStr && this.alarmDateTimeStr.split("T")[1];
-        this.alarmDateObj = this.processAlarmDateObj();
+        this.alarmDateObj = this.createAlarmDateObj();
         this.alarmSelectValue = form.get("alarm-select-input");
+        this.alarmSearchResult = !carousel.classList.contains("d-none") && searchResult.current.results[navigationIndex.value];
         this.id = getRandomId();
     }
     
@@ -38,12 +44,12 @@ class Task {
         const timeArray = this.timeStr.split(":").map((element) => parseInt(element));
         return timeArray;
     }
-    processDateObj() {
+    createDateObj() {
         if (this.datetimeStr) {
             return new Date(this.datetimeStr);
         }
     }
-    processAlarmDateObj() {
+    createAlarmDateObj() {
         if (this.alarmDateTimeStr) {
             return new Date(this.alarmDateTimeStr);
         }
@@ -74,11 +80,13 @@ function getRandomId() {
    // Listener to trigger task creation — saves to array and storage, updates display, and initializes alarms
 formElement.addEventListener("submit", (e) => {
     e.preventDefault();  
-    stopPlayer();  //stops sound from currently selected option  
+    stopSelectPlayer();
+    stopSearchPlayer();
     createTask();
     addTask();
     showTasks();
     setAlarm(task);
+    hideSearchSection();
 });
 
     // Listener to recover data from local storage, update display, init task alarms, and load alarm sounds in select input

@@ -1,52 +1,10 @@
     // Imports
 import { tasks } from "./task-management.js";
-import { hideSearchSection } from "./alarm-search/search-display.js";
+import { fadeOutVolume, audioElements as selectAudioElements } from "./alarm-select.js";
 
     // Data
-const selectInput = document.getElementById("alarm-select-input");
-let selectIndex = selectInput.value;
+const searchAlarmContainer = document.getElementById("search-alarm-container");
 
-const selectOptions = [
-    {id: 210612, description: "Beeping alarm sound"},
-    {id: 128138, description: "Loud alarm sound"},
-    {id: 679738, description: "Calm music alarm"},
-    {id: 693304, description: "Natural alarm sound"},
-    {id: 153316, description: "Please be alarmed"},
-    {id: 579575, description: "Dance style alarm"},
-    {id: 528648, description: "Beethoven style alarm"}
-];
-const selectPlayer = {
-    soundInstances: [],
-    audioElements: document.getElementsByClassName("select-audio-element"),
-};
-
-export const APIKEY = "WqH2tiQ4KnqLXBjOegB3JhanztNAGi7Z2V0E9zPP";
-
-
-    // ------------- Fetching and loading sounds ----------------
-    // Function to perform multiple simultaneous fetch requests
-export function startMultipleFetch() {
-    selectOptions.forEach((selectOption, index) => {
-        fetchSoundInstance(selectOption, index); 
-    })
-}
-
-    // Function to fetch sound instances and load sounds into the audio elements
-async function fetchSoundInstance(selectOption, index) {
-    try {
-        const response = await fetch(`https://freesound.org/apiv2/sounds/${selectOption.id}/?token=${APIKEY}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error, status: ${response.status}`);
-        } 
-        const soundInstance = await response.json();
-        const soundUrl = soundInstance.previews["preview-hq-mp3"];
-        selectPlayer.soundInstances[index] = soundInstance;
-        selectPlayer.audioElements[index].src = soundUrl;
-        console.log(soundInstance);
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-}
 
     // -------------- Initializing alarms ------------------
     // Function to calculate the time at which the task alarm sounds
@@ -54,11 +12,25 @@ function calculateDelay(task) {
     return task.alarmDateObj.getTime() - Date.now();
 }
 
+function checkAudioSource(task) {
+    if (task.alarmSelectValue) {
+        const audioElement = selectAudioElements[task.alarmSelectValue];
+        return audioElement;
+    } else if (task.alarmSearchResult) {
+        const audioElement = document.createElement("audio");
+        audioElement.src = task.alarmSearchResult.previews["preview-hq-mp3"];
+        audioElement.className = "search-alarm-element"
+        searchAlarmContainer.appendChild(audioElement);
+        return audioElement;
+    }
+}
+
     // Function to initialize the alarm for the newly added task
 export function setAlarm(task) {
     if (task.alarmDateObj && calculateDelay(task) > 0) {
+        const audioElement = checkAudioSource(task);
         setTimeout(() => {
-            triggerAlarm(task);
+            triggerAlarm(task, audioElement);
         }, calculateDelay(task));
     }
 }
@@ -67,64 +39,33 @@ export function setAlarm(task) {
 export function setAlarms() {
     tasks.forEach((task) => {
         if (task.alarmDateObj && calculateDelay(task) > 0) {
+            const audioElement = checkAudioSource(task);
             setTimeout(() => {
-                triggerAlarm(task);
+                triggerAlarm(task, audioElement);
             }, calculateDelay(task));
         }
     });
 }
 
     // Function to trigger a SweetAlert and play the alarm sound
-function triggerAlarm(task) {
-        task.alarmSelectValue && selectPlayer.audioElements[task.alarmSelectValue].play();
-        
-        Swal.fire({
-            title: task.title,
-            text: task.dateStr && task.timeStr && `El ${task.dateObj.toLocaleDateString()} a las ${task.dateObj.toLocaleTimeString()}`
-        }).then(() => {
-            if (task.alarmSelectValue) {
-                selectPlayer.audioElements[task.alarmSelectValue].pause();
-                selectPlayer.audioElements[task.alarmSelectValue].currentTime = 0;
-            } 
-        });
-}
-
-    // --------------- Player functions ------------------
-    // Function to show and start player
-function startPlayer() {
-    selectPlayer.audioElements[selectIndex].controls = true;
-    selectPlayer.audioElements[selectIndex].play();
-}
-
-    // Function to hide and stop player
-export function stopPlayer() {
-    if (selectIndex != "") {
-        selectPlayer.audioElements[selectIndex].controls = false;  
-        selectPlayer.audioElements[selectIndex].pause();
-        selectPlayer.audioElements[selectIndex].currentTime = 0;
-    }
-}
-
-
-    // ------------------------ Listeners -----------------------------
-    //Listener para disparar la carga del elemento audio correspondiente a la opción seleccionada
-selectInput.addEventListener("change", (e) => {
-    if (selectIndex != "") {
-        stopPlayer();  // hides and stops previous player
-    }
-
-    if (false) {
-        hideSearchSection(); 
+function triggerAlarm(task, audioElement) {
+    if (audioElement) {
+        audioElement.loop = true;
+        audioElement.play();
     }
     
-    selectIndex = e.target.value;  
-
-    if (selectIndex != "") {
-        startPlayer();  // shows and starts the player
-    }
-});
-
-
-
-
+    Swal.fire({
+        title: task.title,
+        text: task.dateStr && task.timeStr && `${task.dateObj.toLocaleDateString()} at ${task.dateObj.toLocaleTimeString()}`
+    }).then(() => {
+        if (audioElement) {
+            fadeOutVolume(audioElement, 1000)
+            .then(() => {
+                audioElement.pause();
+                audioElement.volume = 1;
+                audioElement.currentTime = 0;
+            });   
+        } 
+    });
+}
 

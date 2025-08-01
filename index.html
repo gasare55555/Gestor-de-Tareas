@@ -118,6 +118,14 @@
                                     <option value="5">Dance style alarm</option>
                                     <option value="6">Beethoven style alarm</option>
                                 </select>                                
+                            </div>
+                            <!-- ALARM SEARCH -->
+                            <div style="margin-bottom: 3.4rem;">
+                                <div id="search-input-group" class="input-group mb-3">
+                                    <input id="search-input" type="text" name="search-input" class="form-control" placeholder="Search for custom sound" aria-describedby="search-submit">
+                                    <input id="search-submit" type="image" src="./assets/search.png" alt="magnifying glass image, submit search"  class="input-group-text btn btn-light border">
+                                </div>
+                                <!-- SELECT AUDIO ELEMENTS -->
                                 <div class="d-flex justify-content-center">
                                     <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
                                     <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
@@ -127,19 +135,12 @@
                                     <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
                                     <audio class="select-audio-element border rounded-4 bg-light mb-3"></audio>
                                 </div>
-                            </div>
-                            <!-- ALARM SEARCH -->
-                            <div style="margin-bottom: 3.4rem;">
-                                <div id="search-input-group" class="input-group mb-3">
-                                    <input id="search-input" type="text" name="search-input" class="form-control" placeholder="Search for custom sound" aria-describedby="search-submit">
-                                    <input id="search-submit" type="image" src="./assets/search.png" alt="magnifying glass image, submit search"  class="input-group-text btn btn-light border">
-                                </div>
-
-                                <div style="position: relative">
+                                <!-- SEARCH CAROUSEL AND LOADER -->
+                                <div style="position: relative; padding-top: 2.4rem;">
                                     <div id="search-spinner-container" class="d-none"></div>
 
-                                    <div id="search-carousel" class="carousel slide px-4 d-none fade transition">              
-                                        <div class="carousel-inner">
+                                    <div id="search-carousel" class="carousel slide px-2 d-none fade transition">              
+                                        <div class="carousel-inner rounded">
                                             <div class="carousel-item active">
                                                 <img id="sound-image" src="" alt="sound wave drawing" class="d-block w-100 rounded">
                                                 <div id="sound-title-container" class="carousel-caption">
@@ -158,6 +159,9 @@
                                         </button>
                                         <div id="search-audio-container">
                                             <!-- <audio class="search-audio-element"></audio> ... -->
+                                        </div>
+                                        <div id="search-alarm-container">
+                                            <!-- <audio class="search-alarm-element"></audio> ... -->
                                         </div>
                                     </div>
                                 </div>
